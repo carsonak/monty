@@ -1,24 +1,24 @@
 #include "monty.h"
 
 char *elem = NULL;
+
 /**
  * main - entry point
+ * @argc: number of arguments
+ * @argv: array of pointers to the arguments
  *
- * Return: 0
+ * Return: 0 on success, 1 on failure
  */
 int main(int argc, char *argv[])
 {
 	FILE *fptr = NULL;
-	char *lnptr = NULL, **tokens = NULL;
 	size_t chr_num, ln_num = 0;
 	stack_t *head = NULL;
-	void (*fncptr)(stack_t **, int) = NULL;
+	void (*fncptr)(stack_t **, unsigned int) = NULL;
+	char *lnptr = NULL, *token = NULL;
 
 	if (argc != 2)
-	{
-		fprintf(stderr, "USAGE: monty file\n");
-		exit(EXIT_FAILURE);
-	}
+		clean_exit(head, "usage", fptr, ln_num);
 
 	fptr = fopen(argv[1], "r");
 	if (!fptr)
@@ -27,44 +27,30 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
+	clean_exit(NULL, NULL, fptr, 0);
 	while ((getline(&lnptr, &chr_num, fptr)) != -1)
 	{
 		ln_num++;
-		tokens = tokenise(lnptr);
-		if (!tokens)
+		token = tokenise(lnptr);
+		if (token)
 		{
-			fprintf(stderr, "Error: malloc failed\n");
-			fclose(fptr);
-			exit(EXIT_FAILURE;)
+			fncptr = compare(token);
+			if (fncptr != NULL)
+				fncptr(&head, ln_num);
+			else
+			{
+				fprintf(stderr, "%ld: unknown instruction %s\n", ln_num, token);
+				clean_exit(head, "None", fptr, ln_num);
+				free(lnptr);
+				exit(EXIT_FAILURE);
+			}
 		}
-		fncptr = compare(tokens[0]);
-		if (fncptr == NULL)
-		{
-			fprintf(stderr, "%d: unknown instruction %s\n", ln_num, token[0]);
-			fclose(fptr);
-			exit(EXIT_FAILURE);
-		}
-		else
-			fncptr(&head, ln_num);
+		free(lnptr);
+		lnptr = NULL;
 	}
 
-	return (0);
-}
-
-/**
- *
- */
-char **tokenise(char *line)
-{
-	size_t i = 0;
-	char *tokens = NULL;
-
-	tokens = strtok(line, " \t\n");
-	if (tokens)
-	{
-		tokens = strdup(tokens);
-		elem = strtok(NULL, " \t\n");
-	}
-
-	return (tokens);
+	free(lnptr);
+	fclose(fptr);
+	free_list(head);
+	return (EXIT_SUCCESS);
 }

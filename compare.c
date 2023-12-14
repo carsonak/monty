@@ -1,21 +1,26 @@
 #include "monty.h"
 
 /**
+ * compare - checks if a string is a valid OPCODE
+ * @token: string with the OPCODE
+ *
+ * Return: Pointer to a function, NULL on no matches
  */
-void (*compare(char *token))(stack **, int) 
+void (*compare(char *token))(stack_t **, unsigned int)
 {
-	instruction_t instructions[] = {
+	instruction_t instruction[] = {
 		{"push", push},
-		{"pall", pall}
-		{NULL, NULL}
-	};
+		{"pall", pall},
+		{NULL, NULL}};
 	int i = 0;
 
 	while (instruction[i].opcode)
 	{
 		if (strcmp(token, instruction[i].opcode) == 0)
-			return instruction[i].f;
+			return (instruction[i].f);
+
 		i++;
 	}
+
 	return (NULL);
 }
