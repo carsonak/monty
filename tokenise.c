@@ -11,7 +11,7 @@ char *tokenise(char *line)
 	char *token = NULL;
 
 	token = strtok(line, " \t\n");
-	elem = strtok(NULL, " \t\n");
+	carry_var.arg = strtok(NULL, " \t\n");
 
 	return (token);
 }

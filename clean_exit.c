@@ -30,6 +30,9 @@ void clean_exit(stack_t *stack, const char *err, FILE *f_ptr, size_t ln_num)
 		if (fptr)
 			fclose(fptr);
 
+		if (carry_var.ln_ptr)
+			free(carry_var.ln_ptr);
+
 		free_list(stack);
 		exit(EXIT_FAILURE);
 	}

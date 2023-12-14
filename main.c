@@ -1,6 +1,6 @@
 #include "monty.h"
 
-char *elem = NULL;
+global_v carry_var;
 
 /**
  * main - entry point
@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 	size_t chr_num, ln_num = 0;
 	stack_t *head = NULL;
 	void (*fncptr)(stack_t **, unsigned int) = NULL;
-	char *lnptr = NULL, *token = NULL;
+	char *token = NULL;
 
 	if (argc != 2)
 		clean_exit(NULL, "usage", NULL, 0);
@@ -28,10 +28,10 @@ int main(int argc, char *argv[])
 	}
 
 	clean_exit(NULL, NULL, fptr, 0);
-	while ((getline(&lnptr, &chr_num, fptr)) != -1)
+	while ((getline(&carry_var.ln_ptr, &chr_num, fptr)) != -1)
 	{
 		ln_num++;
-		token = tokenise(lnptr);
+		token = tokenise(carry_var.ln_ptr);
 		if (token)
 		{
 			fncptr = compare(token);
@@ -40,14 +40,14 @@ int main(int argc, char *argv[])
 			else
 			{
 				fprintf(stderr, "%ld: unknown instruction %s\n", ln_num, token);
-				free(lnptr);
 				clean_exit(head, "None", fptr, ln_num);
 			}
 		}
-		free(lnptr);
-		lnptr = NULL;
+		free(carry_var.ln_ptr);
+		carry_var.ln_ptr = NULL;
 	}
-	free(lnptr);
+
+	free(carry_var.ln_ptr);
 	fclose(fptr);
 	free_list(head);
 	return (EXIT_SUCCESS);

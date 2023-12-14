@@ -9,7 +9,18 @@
 #include <errno.h>
 #include <ctype.h>
 
-extern char *elem;
+/**
+ * struct global - global variable structure
+ * @arg: argument for OPCDEs
+ * @ln_ptr: pointer to current line
+ */
+typedef struct global
+{
+	char *arg;
+	char *ln_ptr;
+} global_v;
+
+extern global_v carry_var;
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)

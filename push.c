@@ -10,9 +10,9 @@ void push(stack_t **stack, unsigned int line_number)
 	stack_t *temp = NULL;
 	size_t i = 0;
 
-	while (i < strlen(elem))
+	while (i < strlen(carry_var.arg))
 	{
-		if (!isdigit(elem[i]))
+		if (!isdigit(carry_var.arg[i]))
 			clean_exit(*stack, "push_error", NULL, line_number);
 
 		i++;
@@ -23,7 +23,7 @@ void push(stack_t **stack, unsigned int line_number)
 
 	if (temp)
 	{
-		temp->n = atoi(elem);
+		temp->n = atoi(carry_var.arg);
 		temp->next = *stack;
 		temp->prev = NULL;
 		if (*stack)
