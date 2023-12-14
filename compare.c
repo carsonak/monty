@@ -2,7 +2,7 @@
 
 /**
  * compare - checks if a string is a valid OPCODE
- * @token: string with the OPCODE
+ * @token: string to be checked
  *
  * Return: Pointer to a function, NULL on no matches
  */
