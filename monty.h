@@ -7,6 +7,8 @@
 #include <unistd.h>
 #include <string.h>
 
+extern char *elem;
+
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -36,5 +38,8 @@ typedef struct instruction_s
 	char *opcode;
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
+
+char **tokenise(char *line);
+int compare(char str);
 
 #endif /*_MONTY_H_*/

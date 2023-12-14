@@ -1,5 +1,6 @@
 #include "monty.h"
 
+char *elem = NULL;
 /**
  * main - entry point
  *
@@ -11,6 +12,7 @@ int main(int argc, char *argv[])
 	char *lnptr = NULL, **tokens = NULL;
 	size_t chr_num, ln_num = 0;
 	stack_t *head = NULL;
+	void (*fncptr)(stack_t **, int) = NULL;
 
 	if (argc != 2)
 	{
@@ -31,8 +33,19 @@ int main(int argc, char *argv[])
 		tokens = tokenise(lnptr);
 		if (!tokens)
 		{
-			/*Malloc Fail*/
+			fprintf(stderr, "Error: malloc failed\n");
+			fclose(fptr);
+			exit(EXIT_FAILURE;)
 		}
+		fncptr = compare(tokens[0]);
+		if (fncptr == NULL)
+		{
+			fprintf(stderr, "%d: unknown instruction %s\n", ln_num, token[0]);
+			fclose(fptr);
+			exit(EXIT_FAILURE);
+		}
+		else
+			fncptr(&head, ln_num);
 	}
 
 	return (0);
@@ -44,25 +57,13 @@ int main(int argc, char *argv[])
 char **tokenise(char *line)
 {
 	size_t i = 0;
-	char **tokens = malloc(sizeof(char *) * 2);
-	char *str = NULL;
+	char *tokens = NULL;
 
+	tokens = strtok(line, " \t\n");
 	if (tokens)
 	{
-		str = strtok(line, " \t\n");
-		for (i = 0; i < 2; i++)
-		{
-			if (str)
-			{
-				(*tokens)[i] = strdup(str);
-				if (!(*tokens)[i])
-					return (NULL);
-			}
-			else
-				(*tokens)[i] = NULL;
-
-			str = strtok(NULL, " \t\n");
-		}
+		tokens = strdup(tokens);
+		elem = strtok(NULL, " \t\n");
 	}
 
 	return (tokens);
