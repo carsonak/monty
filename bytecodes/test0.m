@@ -6,10 +6,10 @@ pall
 
 
 push             32
-              push 64
+            push 64
 
 
-push 128
-    push 256
-    push 512
+push 128          #####
+    push 256      #####
+push 512
 pall
