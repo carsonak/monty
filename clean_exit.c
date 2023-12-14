@@ -1,10 +1,10 @@
 #include "monty.h"
 
 /**
- * clean_exit - prints out error messages, closes open files, frees list
+ * clean_exit - print out error messages, close open files, free the stack
  * @stack: head of the stack
  * @err: error to print
- * @f_ptr: stream of a file
+ * @f_ptr: file stream
  * @ln_num: current line number
  */
 void clean_exit(stack_t *stack, const char *err, FILE *f_ptr, size_t ln_num)

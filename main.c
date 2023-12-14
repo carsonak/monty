@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 	char *lnptr = NULL, *token = NULL;
 
 	if (argc != 2)
-		clean_exit(head, "usage", fptr, ln_num);
+		clean_exit(NULL, "usage", NULL, 0);
 
 	fptr = fopen(argv[1], "r");
 	if (!fptr)
@@ -40,15 +40,13 @@ int main(int argc, char *argv[])
 			else
 			{
 				fprintf(stderr, "%ld: unknown instruction %s\n", ln_num, token);
-				clean_exit(head, "None", fptr, ln_num);
 				free(lnptr);
-				exit(EXIT_FAILURE);
+				clean_exit(head, "None", fptr, ln_num);
 			}
 		}
 		free(lnptr);
 		lnptr = NULL;
 	}
-
 	free(lnptr);
 	fclose(fptr);
 	free_list(head);
