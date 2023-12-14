@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <errno.h>
+#include <ctype.h>
 
 extern char *elem;
 
@@ -39,7 +41,11 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-char **tokenise(char *line);
-int compare(char str);
+char *tokenise(char *line);
+void (*compare(char *token))(stack_t **, unsigned int);
+void free_list(stack_t *head);
+void clean_exit(stack_t *stack, const char *err, FILE *f_ptr, size_t ln_num);
+void push(stack_t **stack, unsigned int line_number);
+void pall(stack_t **head, unsigned int line_number);
 
 #endif /*_MONTY_H_*/
