@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 				fncptr(&head, ln_num);
 			else
 			{
-				fprintf(stderr, "%ld: unknown instruction %s\n", ln_num, token);
+				fprintf(stderr, "L%ld: unknown instruction %s\n", ln_num, token);
 				clean_exit(head, "None", fptr, ln_num);
 			}
 		}
