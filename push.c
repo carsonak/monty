@@ -9,12 +9,18 @@ void push(stack_t **stack, unsigned int line_number)
 {
 	stack_t *temp = NULL;
 	int i = 0;
+	char *alt = NULL;
 
 	if (!carry_var.arg)
 		clean_exit(*stack, "push_no_int", NULL, line_number);
 
-	for (i = 0; carry_var.arg[i]; i++)
-		if (!isdigit(carry_var.arg[i]))
+	if (carry_var.arg[0] == '-')
+		alt = carry_var.arg + 1;
+	else
+		alt = carry_var.arg;
+
+	for (i = 0; alt[i]; i++)
+		if (!isdigit(alt[i]))
 			clean_exit(*stack, "push_no_int", NULL, line_number);
 
 	if (stack)
@@ -22,7 +28,11 @@ void push(stack_t **stack, unsigned int line_number)
 
 	if (temp)
 	{
-		temp->n = atoi(carry_var.arg);
+		if (carry_var.arg[0] == '-')
+			temp->n = -atoi(alt);
+		else
+			temp->n = atoi(alt);
+
 		temp->next = *stack;
 		temp->prev = NULL;
 		if (*stack)
