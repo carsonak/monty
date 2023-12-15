@@ -20,7 +20,7 @@ void clean_exit(stack_t *head, const char *err, FILE *file_ptr, size_t ln_num)
 			fprintf(stderr, "Error: malloc failed\n");
 		else if (!strcmp("usage", err))
 			fprintf(stderr, "USAGE: monty file\n");
-		else if (!strcmp("push_not_int", err))
+		else if (!strcmp("push_no_int", err))
 			fprintf(stderr, "L%ld: usage: push integer\n", ln_num);
 		else if (!strcmp("pop_empty", err))
 			fprintf(stderr, "L%ld: can't pop an empty stack\n", ln_num);
