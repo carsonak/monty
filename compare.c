@@ -13,9 +13,10 @@ void (*compare(char *token))(stack_t **, unsigned int)
 		{"pall", pall}, {"swap", swap},
 		{"pop", pop}, {"nop", nop},
 		{"add", add}, {"div", _div},
-		{"sub", sub},
-		{"mul", mul},
-		{NULL, NULL}};
+		{"sub", sub}, {"mod", mod},
+		{"mul", mul}, {"pchar", pchar},
+		{"pstr", pstr}, {NULL, NULL}
+	};
 	int i = 0;
 
 	while (instruction[i].opcode)
