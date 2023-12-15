@@ -7,5 +7,3 @@ push 64
 pall
 rotr
 pall
-rotr
-pall

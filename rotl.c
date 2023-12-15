@@ -1,13 +1,13 @@
 #include "monty.h"
 
 /**
- * rotl - moves the bottom element of the stack to the top
+ * rotl - moves the top element of the stack to the bottom
  * @stack: address of the head of the stack
  * @line_number: current line number
  */
 void rotl(stack_t **stack, unsigned int line_number)
 {
-	stack_t *walk = *stack;
+	stack_t *temp = *stack, *walk = *stack;
 
 	(void)line_number;
 	while (walk && walk->next)
@@ -15,10 +15,10 @@ void rotl(stack_t **stack, unsigned int line_number)
 
 	if (*stack && (*stack)->next)
 	{
-		walk->prev->next = NULL;
-		walk->prev = NULL;
-		walk->next = *stack;
-		(*stack)->prev = walk;
-		*stack = walk;
+		*stack = (*stack)->next;
+		(*stack)->prev = NULL;
+		walk->next = temp;
+		temp->prev = walk;
+		temp->next = NULL;
 	}
 }
