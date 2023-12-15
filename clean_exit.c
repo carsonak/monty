@@ -30,6 +30,14 @@ void clean_exit(stack_t *head, const char *err, FILE *file_ptr, size_t ln_num)
 			fprintf(stderr, "L%ld: can't sub, stack too short\n", ln_num);
 		else if (!strcmp("mul_less", err))
 			fprintf(stderr, "L%ld: can't mul, stack too short\n", ln_num);
+		else if (!strcmp("pint_empty", err))
+			fprintf(stderr, "L%ld: can't pint, stack empty\n", ln_num);
+		else if (!strcmp("swap_blw2", err))
+			fprintf(stderr, "L%ld: can't swap, stack too short\n", ln_num);
+		else if (!strcmp("div_blw2", err))
+			fprintf(stderr, "L%ld: can't div, stack too short\n", ln_num);
+		else if (!strcmp("div_zero", err))
+			fprintf(stderr, "L%ld: division by zero\n", ln_num);
 
 		if (fptr)
 			fclose(fptr);

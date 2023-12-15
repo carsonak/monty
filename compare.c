@@ -9,10 +9,10 @@
 void (*compare(char *token))(stack_t **, unsigned int)
 {
 	instruction_t instruction[] = {
-		{"push", push},
-		{"pall", pall},
-		{"pop", pop},
-		{"add", add},
+		{"push", push}, {"pint", pint},
+		{"pall", pall}, {"swap", swap},
+		{"pop", pop}, {"nop", nop},
+		{"add", add}, {"_div", _div},
 		{"sub", sub},
 		{"mul", mul},
 		{NULL, NULL}};
