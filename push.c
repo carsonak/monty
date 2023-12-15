@@ -13,7 +13,7 @@ void push(stack_t **stack, unsigned int line_number)
 	while (i < strlen(carry_var.arg))
 	{
 		if (!isdigit(carry_var.arg[i]))
-			clean_exit(*stack, "push_error", NULL, line_number);
+			clean_exit(*stack, "push_not_int", NULL, line_number);
 
 		i++;
 	}
