@@ -10,8 +10,13 @@ char *tokenise(char *line)
 {
 	char *token = NULL;
 
-	token = strtok(line, " \t\n");
-	carry_var.arg = strtok(NULL, " \t\n");
+	if (line[0] == '#')
+		token = "#";
+	else
+	{
+		token = strtok(line, " \t\n");
+		carry_var.arg = strtok(NULL, " \t\n");
+	}
 
 	return (token);
 }
