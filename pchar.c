@@ -15,5 +15,5 @@ void pchar(stack_t **stack, unsigned int line_number)
 		putchar('\n');
 	}
 	else
-		clean_exit(*stack, "empty_stack", NULL, line_number);
+		clean_exit(*stack, "pchar_empty", NULL, line_number);
 }

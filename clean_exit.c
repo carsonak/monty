@@ -10,12 +10,14 @@
 void clean_exit(stack_t *head, const char *err, FILE *file_ptr, size_t ln_num)
 {
 	static FILE *fptr;
+	char *seg = NULL;
 
 	if (file_ptr)
 		fptr = file_ptr;
 
 	if (err)
 	{
+		seg = strtok(strdup(err), "_");
 		if (!strcmp("malloc", err))
 			fprintf(stderr, "Error: malloc failed\n");
 		else if (!strcmp("usage", err))
@@ -23,29 +25,17 @@ void clean_exit(stack_t *head, const char *err, FILE *file_ptr, size_t ln_num)
 		else if (!strcmp("push_no_int", err))
 			fprintf(stderr, "L%ld: usage: push integer\n", ln_num);
 		else if (!strcmp("pop_empty", err))
-			fprintf(stderr, "L%ld: can't pop an empty stack\n", ln_num);
-		else if (!strcmp("add_less", err))
-			fprintf(stderr, "L%ld: can't add, stack too short\n", ln_num);
-		else if (!strcmp("sub_less", err))
-			fprintf(stderr, "L%ld: can't sub, stack too short\n", ln_num);
-		else if (!strcmp("mul_less", err))
-			fprintf(stderr, "L%ld: can't mul, stack too short\n", ln_num);
-		else if (!strcmp("pint_empty", err))
-			fprintf(stderr, "L%ld: can't pint, stack empty\n", ln_num);
-		else if (!strcmp("swap_blw2", err))
-			fprintf(stderr, "L%ld: can't swap, stack too short\n", ln_num);
-		else if (!strcmp("div_blw2", err))
-			fprintf(stderr, "L%ld: can't div, stack too short\n", ln_num);
-		else if (!strcmp("div_zero", err))
-			fprintf(stderr, "L%ld: division by zero\n", ln_num);
-		else if (!strcmp("mod_blw2", err))
-			fprintf(stderr, "L%ld: can't mod, stack too short\n", ln_num);
-		else if (!strcmp("mod_zero", err))
+			fprintf(stderr, "L%ld: can't %s an empty stack\n", ln_num, seg);
+		else if (!strcmp("add_less", err) || !strcmp("sub_less", err) ||
+				 !strcmp("swap_blw2", err) || !strcmp("mul_less", err) ||
+				 !strcmp("div_blw2", err) || !strcmp("mod_blw2", err))
+			fprintf(stderr, "L%ld: can't %s, stack too short\n", ln_num, seg);
+		else if (!strcmp("mod_zero", err) || !strcmp("div_zero", err))
 			fprintf(stderr, "L%ld: division by zero\n", ln_num);
 		else if (!strcmp("not_ascii", err))
 			fprintf(stderr, "L%ld: can't pchar, value out of range\n", ln_num);
-		else if (!strcmp("empty_stack", err))
-			fprintf(stderr, "L%ld: can't pchar, stack empty\n", ln_num);
+		else if (!strcmp("pchar_empty", err) || !strcmp("pint_empty", err))
+			fprintf(stderr, "L%ld: can't %s, stack empty\n", ln_num, seg);
 
 		if (fptr)
 			fclose(fptr);
@@ -54,6 +44,7 @@ void clean_exit(stack_t *head, const char *err, FILE *file_ptr, size_t ln_num)
 			free(carry_var.ln_ptr);
 
 		free_list(head);
+		free(seg);
 		exit(EXIT_FAILURE);
 	}
 }
