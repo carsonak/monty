@@ -15,6 +15,8 @@ void (*compare(char *token))(stack_t **, unsigned int)
 		{"add", add}, {"div", _div},
 		{"sub", sub},
 		{"mul", mul},
+		{"rotl", rotl},
+		{"rotr", rotr},
 		{NULL, NULL}};
 	int i = 0;
 
