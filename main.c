@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 	{
 		ln_num++;
 		token = tokenise(carry_var.ln_ptr);
-		if (token)
+		if (token && token[0] != '#')
 		{
 			fncptr = compare(token);
 			if (fncptr != NULL)
