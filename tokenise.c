@@ -10,8 +10,8 @@ char *tokenise(char *line)
 {
 	char *token = NULL;
 
-	token = strtok(line, " \n");
-	carry_var.arg = strtok(NULL, " \n");
+	token = strtok(line, " \t\n");
+	carry_var.arg = strtok(NULL, " \t\n");
 
 	return (token);
 }
