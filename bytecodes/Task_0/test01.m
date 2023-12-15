@@ -12,8 +12,7 @@ push             32
 
 push 128          #####
     push 256      #####
-push 512
+push -512
 pall
-
 #push 1024
 #pall
