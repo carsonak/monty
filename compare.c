@@ -12,6 +12,9 @@ void (*compare(char *token))(stack_t **, unsigned int)
 		{"push", push},
 		{"pall", pall},
 		{"pop", pop},
+		{"add", add},
+		{"sub", sub},
+		{"mul", mul},
 		{NULL, NULL}};
 	int i = 0;
 
