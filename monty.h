@@ -59,5 +59,8 @@ void clean_exit(stack_t *head, const char *err, FILE *file_ptr, size_t ln_num);
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void pop(stack_t **stack, unsigned int line_number);
+void add(stack_t **stack, unsigned int line_number);
+void sub(stack_t **stack, unsigned int line_number);
+void mul(stack_t **stack, unsigned int line_number);
 
 #endif /*_MONTY_H_*/

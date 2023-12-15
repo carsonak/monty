@@ -24,6 +24,12 @@ void clean_exit(stack_t *head, const char *err, FILE *file_ptr, size_t ln_num)
 			fprintf(stderr, "L%ld: usage: push integer\n", ln_num);
 		else if (!strcmp("pop_empty", err))
 			fprintf(stderr, "L%ld: can't pop an empty stack\n", ln_num);
+		else if (!strcmp("add_less", err))
+			fprintf(stderr, "L%ld: can't add, stack too short\n", ln_num);
+		else if (!strcmp("sub_less", err))
+			fprintf(stderr, "L%ld: can't sub, stack too short\n", ln_num);
+		else if (!strcmp("mul_less", err))
+			fprintf(stderr, "L%ld: can't mul, stack too short\n", ln_num);
 
 		if (fptr)
 			fclose(fptr);
