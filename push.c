@@ -8,9 +8,14 @@
 void push(stack_t **stack, unsigned int line_number)
 {
 	stack_t *temp = NULL;
+	int i = 0;
 
-	if (!carry_var.arg || !isdigit(carry_var.arg[0]))
+	if (!carry_var.arg)
 		clean_exit(*stack, "push_no_int", NULL, line_number);
+
+	for (i = 0; carry_var.arg[i]; i++)
+		if (!isdigit(carry_var.arg[i]))
+			clean_exit(*stack, "push_no_int", NULL, line_number);
 
 	if (stack)
 		temp = malloc(sizeof(stack_t));
