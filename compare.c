@@ -11,6 +11,7 @@ void (*compare(char *token))(stack_t **, unsigned int)
 	instruction_t instruction[] = {
 		{"push", push},
 		{"pall", pall},
+		{"pop", pop},
 		{NULL, NULL}};
 	int i = 0;
 
