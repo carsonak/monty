@@ -30,8 +30,8 @@ void print_error(error_code err, const char *const opcode, size_t line_num)
 	case PCHAR_NOT_ASCII:
 		fprintf(stderr, "L%ld: can't pchar, value out of range\n", line_num);
 		break;
-	case PINT_EMPTY_STACK:
-		fprintf(stderr, "L%ld: can't pint an empty stack\n", line_num);
+	case POP_EMPTY_STACK:
+		fprintf(stderr, "L%ld: can't pop an empty stack\n", line_num);
 		break;
 	case PUSH_NO_INTEGER:
 		fprintf(stderr, "L%ld: usage: push integer\n", line_num);

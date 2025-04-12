@@ -12,7 +12,7 @@ void pint(deque *stack, unsigned int line_number)
 	assert(stack);
 	if (stack->len < 1)
 	{
-		print_error(PINT_EMPTY_STACK, "pint", line_number);
+		print_error(EMPTY_STACK, "pint", line_number);
 		return;
 	}
 

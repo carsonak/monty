@@ -12,7 +12,7 @@ void pop(deque *stack, unsigned int line_number)
 	assert(stack);
 	if (stack->len < 1)
 	{
-		print_error(EMPTY_STACK, "pop", line_number);
+		print_error(POP_EMPTY_STACK, "pop", line_number);
 		return;
 	}
 
