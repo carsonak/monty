@@ -1,5 +1,5 @@
-#ifndef _MONTY_H_
-#define _MONTY_H_
+#ifndef MONTY_H
+#define MONTY_H
 
 #define _GNU_SOURCE
 #include <stdio.h>
@@ -9,34 +9,15 @@
 #include <errno.h>
 #include <ctype.h>
 
-/**
- * struct global - global variable structure
- * @arg: argument for OPCDEs
- * @ln_ptr: pointer to current line
- */
-typedef struct global
-{
-	char *arg;
-	char *ln_ptr;
-} global_v;
-
-extern global_v carry_var;
+#include "error_codes.h"
+#include "monty_data_structures.h"
 
 /**
- * struct stack_s - doubly linked list representation of a stack (or queue)
- * @n: integer
- * @prev: points to the previous element of the stack (or queue)
- * @next: points to the next element of the stack (or queue)
- *
- * Description: doubly linked list node structure
- * for stack, queues, LIFO, FIFO
+ * opcode_func - generic function prototype for opcode handlers.
+ * @head: pointer to the top the stack.
+ * @linenumber:
  */
-typedef struct stack_s
-{
-	int n;
-	struct stack_s *prev;
-	struct stack_s *next;
-} stack_t;
+typedef void opcode_func(deque *head, unsigned int line_number);
 
 /**
  * struct instruction_s - opcode and its function
@@ -49,27 +30,38 @@ typedef struct stack_s
 typedef struct instruction_s
 {
 	char *opcode;
-	void (*f)(stack_t **stack, unsigned int line_number);
+	opcode_func *f;
 } instruction_t;
 
-char *tokenise(char *line);
-void (*compare(char *token))(stack_t **, unsigned int);
-void free_list(stack_t *head);
-void clean_exit(stack_t *head, const char *err, FILE *file_ptr, size_t ln_num);
-void push(stack_t **stack, unsigned int line_number);
-void pall(stack_t **stack, unsigned int line_number);
-void pop(stack_t **stack, unsigned int line_number);
-void add(stack_t **stack, unsigned int line_number);
-void sub(stack_t **stack, unsigned int line_number);
-void mul(stack_t **stack, unsigned int line_number);
-void pint(stack_t **stack, unsigned int line_number);
-void swap(stack_t **stack, unsigned int line_number);
-void nop(stack_t **stack, unsigned int line_number);
-void _div(stack_t **stack, unsigned int line_number);
-void rotl(stack_t **stack, unsigned int line_number);
-void rotr(stack_t **stack, unsigned int line_number);
-void mod(stack_t **stack, unsigned int line_number);
-void pchar(stack_t **stack, unsigned int line_number);
-void pstr(stack_t **stack, unsigned int line_number);
+/**
+ * struct context_container - structure that holds operation context.
+ * @arg: argument to opcode.
+ * @operation_ok: flag that indicates if an operation was successful.
+ */
+typedef struct context_container
+{
+	char *arg;
+	unsigned short int operation_ok;
+} context_container;
 
-#endif /*_MONTY_H_*/
+extern context_container context;
+
+void print_error(error_code err, const char *const opcode, size_t line_num);
+
+void add(deque *stack, unsigned int line_number);
+void divide(deque *stack, unsigned int line_number);
+void mod(deque *stack, unsigned int line_number);
+void mul(deque *stack, unsigned int line_number);
+void nop(deque *stack, unsigned int line_number);
+void pall(deque *stack, unsigned int line_number);
+void pchar(deque *stack, unsigned int line_number);
+void pint(deque *stack, unsigned int line_number);
+void pop(deque *stack, unsigned int line_number);
+void pstr(deque *stack, unsigned int line_number);
+void push(deque *stack, unsigned int line_number);
+void rotl(deque *stack, unsigned int line_number);
+void rotr(deque *stack, unsigned int line_number);
+void sub(deque *stack, unsigned int line_number);
+void swap(deque *stack, unsigned int line_number);
+
+#endif /*MONTY_H_*/

@@ -1,41 +1,51 @@
 #include "monty.h"
 
+#include <assert.h>
+#include <limits.h>
+
 /**
- * push - adds a new node at the start of a doubly linked list
+ * read_int - extract a an int from a string.
+ * @nstr: pointer to the string.
+ * @number: address to store the extracted int.
+ *
+ * Return: 1 on success, 0 on error.
+ */
+static unsigned short int read_int(const char *const nstr, int *const number)
+{
+	char *end = NULL;
+	long int n = 0;
+
+	assert(number);
+	if (!nstr)
+		return (0);
+
+	n = strtol(nstr, &end, 10);
+	if (nstr == end)
+		return (0);
+
+	if (n >= INT_MAX)
+		*number = INT_MAX;
+	else if (n <= INT_MIN)
+		*number = INT_MIN;
+	else
+		*number = n;
+
+	return (1);
+}
+
+/**
+ * push - adds a new node at the top of the stack.
  * @stack: address of the stack of the list
  * @line_number: current line number
  */
-void push(stack_t **stack, unsigned int line_number)
+void push(deque * const stack, unsigned int line_number)
 {
-	stack_t *temp = NULL;
-	int i = 0;
-	char *alt = NULL;
+	int n = 0;
 
-	if (!carry_var.arg)
-		clean_exit(*stack, "push_no_int", NULL, line_number);
+	assert(stack);
+	if (read_int(context.arg, &n) == 0)
+		print_error(PUSH_NO_INTEGER, "push", line_number);
 
-	alt = carry_var.arg;
-	if (carry_var.arg[0] == '-')
-		alt++;
-
-	for (i = 0; alt[i]; i++)
-		if (!isdigit(alt[i]))
-			clean_exit(*stack, "push_no_int", NULL, line_number);
-
-	if (stack)
-		temp = malloc(sizeof(stack_t));
-
-	if (!temp)
-		clean_exit(*stack, "malloc", NULL, line_number);
-
-	temp->n = atoi(alt);
-	if (carry_var.arg[0] == '-')
-		temp->n = -temp->n;
-
-	temp->next = *stack;
-	temp->prev = NULL;
-	if (*stack)
-		(*stack)->prev = temp;
-
-	*stack = temp;
+	if (!dq_push_first(stack, n))
+		print_error(MALLOC_FAIL, "push", line_number);
 }

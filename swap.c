@@ -1,28 +1,28 @@
 #include "monty.h"
 
-/**
- * swap - swaps the top two elements of the stack
- * @stack: address of the head of the list
- * @line_number: current line number
- */
-void swap(stack_t **stack, unsigned int line_number)
-{
-	stack_t *curr = *stack;
-	int count = 0, temp;
+#include <assert.h>
 
-	if (curr)
+/**
+ * swap - swaps the top two elements of the stack.
+ * @stack: pointer to the stack.
+ * @line_number: current line number.
+ */
+void swap(deque *stack, unsigned int line_number)
+{
+	linked_node *first, *second;
+	int temp;
+
+	assert(stack);
+	if (stack->len < 2)
 	{
-		while (curr)
-		{
-			count++;
-			curr = curr->next;
-		}
-		if (count < 2)
-			clean_exit(*stack, "swap_blw2", NULL, line_number);
-		temp = (*stack)->n;
-		(*stack)->n = (*stack)->next->n;
-		(*stack)->next->n = temp;
+		print_error(STACK_TOO_SHORT, "swap", line_number);
+		return;
 	}
-	else
-		clean_exit(*stack, "swap_blw2", NULL, line_number);
+
+	first = stack->first;
+	second = first->next;
+	temp = first->n;
+
+	first->n = second->n;
+	second->n = temp;
 }

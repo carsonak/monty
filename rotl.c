@@ -1,24 +1,23 @@
 #include "monty.h"
 
+#include <assert.h>
+
 /**
- * rotl - moves the top element of the stack to the bottom
- * @stack: address of the head of the stack
- * @line_number: current line number
+ * rotl - move the top element of the stack to the bottom.
+ * @stack: pointer to the stack.
+ * @line_number: current line number.
  */
-void rotl(stack_t **stack, unsigned int line_number)
+void rotl(deque *stack, unsigned int line_number)
 {
-	stack_t *temp = *stack, *walk = *stack;
+	linked_node *new_top, *old_top;
 
 	(void)line_number;
-	while (walk && walk->next)
-		walk = walk->next;
+	assert(stack);
+	if (stack->len < 2)
+		return;
 
-	if (*stack && (*stack)->next)
-	{
-		*stack = (*stack)->next;
-		(*stack)->prev = NULL;
-		walk->next = temp;
-		temp->prev = walk;
-		temp->next = NULL;
-	}
+	new_top = stack->first->next;
+	old_top = ln_unlink(stack->first);
+	stack->first = new_top;
+	stack->last = ln_insert_after(stack->last, old_top);
 }

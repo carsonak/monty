@@ -1,20 +1,20 @@
 #include "monty.h"
 
+#include <assert.h>
+
 /**
- * pop - deletes the head of the stack
- * @stack: pointer to the head of the stack
- * @line_number: current line number
+ * pop - delete the head of the stack.
+ * @stack: pointer to the stack.
+ * @line_number: current line number.
  */
-void pop(stack_t **stack, unsigned int line_number)
+void pop(deque *stack, unsigned int line_number)
 {
-	stack_t *copy = *stack;
+	assert(stack);
+	if (stack->len < 1)
+	{
+		print_error(EMPTY_STACK, "pop", line_number);
+		return;
+	}
 
-	if (!copy)
-		clean_exit(*stack, "pop_empty", NULL, line_number);
-
-	*stack = (*stack)->next;
-	if (*stack)
-		(*stack)->prev = NULL;
-
-	free(copy);
+	dq_pop_first(stack);
 }

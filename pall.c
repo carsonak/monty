@@ -1,22 +1,22 @@
 #include "monty.h"
 
+#include <assert.h>
+
 /**
- * pall - prints elements of a list
+ * pall - prints all values on the stack.
  * @stack: address of the head of the list
  * @line_number: current line number
  */
-void pall(stack_t **stack, unsigned int line_number)
+void pall(deque *stack, unsigned int line_number)
 {
-	stack_t *walk = *stack;
+	linked_node *walk = NULL;
+
 	(void)line_number;
-
-	if (*stack == NULL)
-		return;
-
+	assert(stack);
+	walk = stack->first;
 	while (walk)
 	{
 		printf("%d\n", walk->n);
 		walk = walk->next;
 	}
-	fflush(stdout);
 }

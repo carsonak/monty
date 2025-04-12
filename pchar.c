@@ -1,19 +1,26 @@
 #include "monty.h"
 
+#include <assert.h>
+
 /**
- * pchar -  prints the char at the top of the stack
- * @stack: address of the head of the list
- * @line_number: current line number
+ * pchar -  print the char at the top of the stack.
+ * @stack: pointer to the stack.
+ * @line_number: current line number.
  */
-void pchar(stack_t **stack, unsigned int line_number)
+void pchar(deque *stack, unsigned int line_number)
 {
-	if (*stack && stack)
+	assert(stack);
+	if (stack->len < 1)
 	{
-		if ((*stack)->n < 0 || (*stack)->n > 127)
-			clean_exit(*stack, "not_ascii", NULL, line_number);
-		putchar((*stack)->n);
-		putchar('\n');
+		print_error(EMPTY_STACK, "pchar", line_number);
+		return;
 	}
-	else
-		clean_exit(*stack, "pchar_empty", NULL, line_number);
+
+	if (!isascii(stack->first->n))
+	{
+		print_error(PCHAR_NOT_ASCII, "pchar", line_number);
+		return;
+	}
+
+	printf("%c\n", stack->first->n);
 }

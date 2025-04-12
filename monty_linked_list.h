@@ -1,5 +1,5 @@
-#ifndef LINKED_NODES_H
-#define LINKED_NODES_H
+#ifndef MONTY_LINKED_LIST_H
+#define MONTY_LINKED_LIST_H
 
 #include <stdlib.h> /* *alloc */
 
@@ -22,12 +22,14 @@ typedef struct stack_s
 typedef struct stack_s linked_node;
 
 linked_node *ln_new(int data);
+linked_node *ln_unlink(linked_node *const node);
+void *ll_clear(linked_node *const head);
+int ln_delete(linked_node *const node);
+
 linked_node *
 ln_insert_after(linked_node *const this_node, linked_node *const other_node);
 linked_node *
 ln_insert_before(linked_node *const this_node, linked_node *other_node);
-void *ln_remove(linked_node *node);
-void *ln_swap_data(linked_node *const node, int data);
-void *ll_clear(linked_node *const head);
+int ln_swap_data(linked_node *const node, int data);
 
-#endif /* LINKED_NODES_H */
+#endif /* MONTY_LINKED_LIST_H */

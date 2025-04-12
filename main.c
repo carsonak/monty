@@ -1,6 +1,51 @@
 #include "monty.h"
 
-global_v carry_var;
+context_container context = {NULL, 1};
+
+/**
+ * read_opcode - breaks a line into an opcode and its argument.
+ * @line: pointer to the line.
+ *
+ * Return: pointer to the opcode string.
+ */
+static char *read_opcode(char *line)
+{
+	char *opcode = strtok(line, " \t\n");
+
+	context.arg = strtok(NULL, " \t\n");
+	return (opcode);
+}
+
+/**
+ * exec_opcode - executes valid opcodes, otherwise prints an error.
+ * @stack: pointer to the stack.
+ * @opcode: pointer to the the opcode.
+ * @line_number: current line number.
+ */
+static void exec_opcode(deque *stack, char *opcode, size_t line_number)
+{
+	int i = 0;
+	instruction_t instruction[] = {
+		{"push", push}, {"pint", pint},   {"pall", pall}, {"swap", swap},
+		{"pop", pop},   {"nop", nop},     {"add", add},   {"div", divide},
+		{"sub", sub},   {"rotl", rotl},   {"rotr", rotr}, {"mod", mod},
+		{"mul", mul},   {"pchar", pchar}, {"pstr", pstr}, {NULL, NULL},
+	};
+
+	while (instruction[i].opcode)
+	{
+		if (strcmp(opcode, instruction[i].opcode) == 0)
+		{
+			instruction[i].f(stack, line_number);
+			return;
+		}
+
+		++i;
+	}
+
+	print_error(UNKNOWN_OPCODE, opcode, line_number);
+	context.operation_ok = 0;
+}
 
 /**
  * main - entry point
@@ -11,44 +56,43 @@ global_v carry_var;
  */
 int main(int argc, char *argv[])
 {
-	FILE *fptr = NULL;
-	size_t chr_num, ln_num = 0;
-	stack_t *head = NULL;
-	void (*fncptr)(stack_t **, unsigned int) = NULL;
-	char *token = NULL;
+	FILE *script = NULL;
+	size_t line_num = 0;
+	deque stk = {0};
+	char *opcode = NULL, *line = NULL;
 
 	if (argc != 2)
-		clean_exit(NULL, "usage", NULL, 0);
+	{
+		print_error(INVALID_ARGS, NULL, line_num);
+		return (EXIT_FAILURE);
+	}
 
-	fptr = fopen(argv[1], "r");
-	if (!fptr)
+	script = fopen(argv[1], "r");
+	if (!script)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-		exit(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
 
-	clean_exit(NULL, NULL, fptr, 0);
-	while ((getline(&carry_var.ln_ptr, &chr_num, fptr)) != -1)
+	errno = 0;
+	while (context.operation_ok == 1 && getline(&line, NULL, script) != -1)
 	{
-		ln_num++;
-		token = tokenise(carry_var.ln_ptr);
-		if (token && token[0] != '#')
-		{
-			fncptr = compare(token);
-			if (fncptr != NULL)
-				fncptr(&head, ln_num);
-			else
-			{
-				fprintf(stderr, "L%ld: unknown instruction %s\n", ln_num, token);
-				clean_exit(head, "None", fptr, ln_num);
-			}
-		}
-		free(carry_var.ln_ptr);
-		carry_var.ln_ptr = NULL;
+		++line_num;
+		opcode = read_opcode(line);
+		if (opcode && opcode[0] != '#')
+			exec_opcode(&stk, opcode, line_num);
+
+		free(line);
+		line = NULL;
 	}
 
-	free(carry_var.ln_ptr);
-	fclose(fptr);
-	free_list(head);
+	if (context.operation_ok == 1 && errno == ENOMEM)
+		print_error(MALLOC_FAIL, NULL, line_num);
+
+	fclose(script);
+	dq_clear(&stk);
+	if (context.operation_ok == 0)
+		return (EXIT_FAILURE);
+
 	return (EXIT_SUCCESS);
 }

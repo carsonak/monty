@@ -1,23 +1,29 @@
 #include "monty.h"
 
+#include <assert.h>
+
 /**
- * pstr - prints the string starting at the top of the stack
- * followed by a new line
- * @stack: address of the head of the list
+ * pstr - print the initial ascii characters in the stack
+ * followed by a new line.
+ * @stack: pointer to the stack.
  * @line_number: current line number
  */
-void pstr(stack_t **stack, unsigned int line_number)
+void pstr(deque *stack, unsigned int line_number)
 {
-	stack_t *curr = *stack;
+	linked_node *walk;
 
 	(void)line_number;
+	assert(stack);
+	walk = stack->first;
 
-	while (curr)
+	while (walk)
 	{
-		if (curr->n <= 0 || curr->n > 127)
+		if (!isascii(walk->n))
 			break;
-		putchar(curr->n);
-		curr = curr->next;
+
+		putchar(walk->n);
+		walk = walk->next;
 	}
+
 	putchar('\n');
 }
