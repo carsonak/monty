@@ -1,6 +1,8 @@
+#define _XOPEN_SOURCE
 #include "monty.h"
 
 #include <assert.h>
+#include <ctype.h>
 
 /**
  * pstr - print the initial ascii characters in the stack

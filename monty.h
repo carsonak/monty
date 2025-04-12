@@ -1,13 +1,9 @@
 #ifndef MONTY_H
 #define MONTY_H
 
-#define _GNU_SOURCE
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <errno.h>
-#include <ctype.h>
+#define _POSIX_C_SOURCE 200809L /* getline */
+#include <stdio.h>              /* *printf, getline */
+#include <stdlib.h>             /* fopen, *alloc */
 
 #include "error_codes.h"
 #include "monty_data_structures.h"
@@ -36,12 +32,12 @@ typedef struct instruction_s
 /**
  * struct context_container - structure that holds operation context.
  * @arg: argument to opcode.
- * @operation_ok: flag that indicates if an operation was successful.
+ * @ok: flag that indicates if an operation was successful.
  */
 typedef struct context_container
 {
 	char *arg;
-	unsigned short int operation_ok;
+	unsigned short int ok;
 } context_container;
 
 extern context_container context;

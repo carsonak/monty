@@ -1,5 +1,8 @@
 #include "monty.h"
 
+#include <errno.h>  /* errno */
+#include <string.h> /* strtok, strcmp */
+
 context_container context = {NULL, 1};
 
 /**
@@ -44,7 +47,7 @@ static void exec_opcode(deque *stack, char *opcode, size_t line_number)
 	}
 
 	print_error(UNKNOWN_OPCODE, opcode, line_number);
-	context.operation_ok = 0;
+	context.ok = 0;
 }
 
 /**
@@ -57,7 +60,7 @@ static void exec_opcode(deque *stack, char *opcode, size_t line_number)
 int main(int argc, char *argv[])
 {
 	FILE *script = NULL;
-	size_t line_num = 0;
+	size_t line_num = 0, line_size = 0;
 	deque stk = {0};
 	char *opcode = NULL, *line = NULL;
 
@@ -75,7 +78,7 @@ int main(int argc, char *argv[])
 	}
 
 	errno = 0;
-	while (context.operation_ok == 1 && getline(&line, NULL, script) != -1)
+	while (context.ok == 1 && getline(&line, &line_size, script) != -1)
 	{
 		++line_num;
 		opcode = read_opcode(line);
@@ -86,12 +89,13 @@ int main(int argc, char *argv[])
 		line = NULL;
 	}
 
-	if (context.operation_ok == 1 && errno == ENOMEM)
+	if (context.ok == 1 && errno == ENOMEM)
 		print_error(MALLOC_FAIL, NULL, line_num);
 
+	free(line);
 	fclose(script);
 	dq_clear(&stk);
-	if (context.operation_ok == 0)
+	if (context.ok == 0)
 		return (EXIT_FAILURE);
 
 	return (EXIT_SUCCESS);

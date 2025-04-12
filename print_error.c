@@ -1,5 +1,7 @@
 #include "monty.h"
 
+#include <errno.h> /* errno */
+
 /**
  * print_error - print out error messages.
  * @err: error code.
@@ -20,7 +22,7 @@ void print_error(error_code err, const char *const opcode, size_t line_num)
 		fprintf(stderr, "USAGE: monty file\n");
 		break;
 	case UNKNOWN_OPCODE:
-		fprintf(stderr, "L<line_number>: unknown instruction %s\n", opcode);
+		fprintf(stderr, "L%ld: unknown instruction %s\n", line_num, opcode);
 		break;
 	case MALLOC_FAIL:
 		fprintf(stderr, "Error: malloc failed\n");
@@ -41,6 +43,6 @@ void print_error(error_code err, const char *const opcode, size_t line_num)
 		break;
 	}
 
-	context.operation_ok = 0;
+	context.ok = 0;
 	errno = 0;
 }

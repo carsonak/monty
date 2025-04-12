@@ -1,6 +1,8 @@
+#define _XOPEN_SOURCE
 #include "monty.h"
 
 #include <assert.h>
+#include <ctype.h>
 
 /**
  * pchar -  print the char at the top of the stack.
