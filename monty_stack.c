@@ -5,7 +5,7 @@
  *
  * Return: pointer to the new stack, NULL on failure.
  */
-stack *stk_new(void) { return (calloc(1, sizeof(stack))); }
+monty_stack *stk_new(void) { return (calloc(1, sizeof(monty_stack))); }
 
 /**
  * stk_push - push an item onto a.
@@ -14,9 +14,9 @@ stack *stk_new(void) { return (calloc(1, sizeof(stack))); }
  *
  * Return: pointer to the newly added node, NULL if s is NULL or failure.
  */
-linked_node *stk_push(stack *const s, void *const data)
+linked_node *stk_push(monty_stack *const s, int data)
 {
-	linked_node *new_top = dln_new(data);
+	linked_node *new_top = ln_new(data);
 
 	if (!s)
 		return (NULL);
@@ -24,7 +24,7 @@ linked_node *stk_push(stack *const s, void *const data)
 	if (!new_top)
 		return (NULL);
 
-	s->top = dln_insert_before(s->top, new_top);
+	s->top = ln_insert_before(s->top, new_top);
 	++(s->len);
 	return (new_top);
 }
@@ -35,7 +35,7 @@ linked_node *stk_push(stack *const s, void *const data)
  *
  * Return: data that was in the old top node, 0 if s is NULL.
  */
-int stk_pop(stack *const s)
+int stk_pop(monty_stack *const s)
 {
 	linked_node *old_top = NULL;
 
@@ -43,8 +43,8 @@ int stk_pop(stack *const s)
 		return (0);
 
 	old_top = s->top;
-	s->top = dln_get_next(old_top);
-	int n = dln_remove(old_top);
+	s->top = ln_get_next(old_top);
+	int n = ln_remove(old_top);
 
 	if (s->len)
 		--(s->len);
@@ -56,12 +56,12 @@ int stk_pop(stack *const s)
  * clear_stack - delete a stack.
  * @s: the stack to operate on.
  */
-static void clear_stack(stack *const s)
+static void clear_stack(monty_stack *const s)
 {
 	if (!s || !s->top)
 		return;
 
-	s->top = sll_clear(s->top);
+	s->top = ll_clear(s->top);
 	s->len = 0;
 }
 
@@ -71,7 +71,7 @@ static void clear_stack(stack *const s)
  *
  * Return: NULL always.
  */
-void *stk_delete(stack *const nullable_ptr)
+void *stk_delete(monty_stack *const nullable_ptr)
 {
 	clear_stack(nullable_ptr);
 	free(nullable_ptr);
