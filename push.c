@@ -12,16 +12,16 @@
  */
 static unsigned short int read_int(const char *const nstr, int *const number)
 {
-	/* char *end = NULL; */
+	char *end = NULL;
 	long int n = 0;
 
 	assert(number);
 	if (!nstr)
 		return (0);
 
-	n = atoi(nstr);
-	/* if (nstr == end) */
-	/* return (0); */
+	n = strtol(nstr, &end, 10);
+	if (nstr == end)
+		return (0);
 
 	if (n >= INT_MAX)
 		*number = INT_MAX;
