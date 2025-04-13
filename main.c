@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 	}
 
 	errno = 0;
-	while (context.ok == 1 && getline(&line, &line_size, script) != -1)
+	while (context.ok > 0 && getline(&line, &line_size, script) != -1)
 	{
 		++line_num;
 		opcode = read_opcode(line);
@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
 		line = NULL;
 	}
 
-	if (context.ok == 1 && errno == ENOMEM)
+	if (context.ok > 0 && errno == ENOMEM)
 		print_error(MALLOC_FAIL, NULL, line_num);
 
 	free(line);
