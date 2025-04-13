@@ -3,17 +3,17 @@
 #include <assert.h>
 
 /**
- * pall - prints all values on the stack.
- * @stack: address of the head of the list
- * @line_number: current line number
+ * pall - prints all values on the deque.
+ * @dq: pointer to the deque.
+ * @line_number: current line number.
  */
-void pall(deque *stack, unsigned int line_number)
+void pall(deque * const dq, const unsigned int line_number)
 {
-	linked_node *walk = NULL;
+	const linked_node *walk = NULL;
 
 	(void)line_number;
-	assert(stack);
-	walk = stack->first;
+	assert(dq);
+	walk = dq->first;
 	while (walk)
 	{
 		printf("%d\n", walk->n);

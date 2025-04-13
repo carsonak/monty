@@ -7,7 +7,7 @@
  *
  * Return: pointer to the newly added node, NULL if `dq` is NULL or on failure.
  */
-linked_node *dq_push_first(deque *const dq, int data)
+linked_node *dq_push_first(deque * const dq, int data)
 {
 	linked_node *new_first = ln_new(data);
 
@@ -29,7 +29,7 @@ linked_node *dq_push_first(deque *const dq, int data)
  *
  * Return: pointer to the newly added node, NULL if `dq` is NULL or failure.
  */
-linked_node *dq_push_last(deque *const dq, int data)
+linked_node *dq_push_last(deque * const dq, int data)
 {
 	linked_node *new_last = ln_new(data);
 
@@ -50,7 +50,7 @@ linked_node *dq_push_last(deque *const dq, int data)
  *
  * Return: data that was in the old first node, 0 if dq is NULL.
  */
-int dq_pop_first(deque *const dq)
+int dq_pop_first(deque * const dq)
 {
 	linked_node *old_first;
 	int n;
@@ -78,7 +78,7 @@ int dq_pop_first(deque *const dq)
  *
  * Return: data that was in the old last node, 0 if dq is NULL.
  */
-int dq_pop_last(deque *const dq)
+int dq_pop_last(deque * const dq)
 {
 	linked_node *old_last;
 	int n;

@@ -3,18 +3,18 @@
 #include <assert.h>
 
 /**
- * pint - print the value at the top of stack.
- * @stack: pointer to the stack.
+ * pint - print the first value of the deque.
+ * @dq: pointer to the deque.
  * @line_number: current line number.
  */
-void pint(deque *stack, unsigned int line_number)
+void pint(deque * const dq, const unsigned int line_number)
 {
-	assert(stack);
-	if (stack->len < 1)
+	assert(dq);
+	if (dq->len < 1)
 	{
 		print_error(EMPTY_STACK, "pint", line_number);
 		return;
 	}
 
-	printf("%d\n", stack->first->n);
+	printf("%d\n", dq->first->n);
 }

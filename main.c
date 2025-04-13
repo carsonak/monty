@@ -3,7 +3,7 @@
 #include <errno.h>  /* errno */
 #include <string.h> /* strtok, strcmp */
 
-context_container context = {NULL, 1};
+context_container context = {NULL, 1, 1};
 
 /**
  * read_opcode - breaks a line into an opcode and its argument.
@@ -21,25 +21,27 @@ static char *read_opcode(char *line)
 
 /**
  * exec_opcode - executes valid opcodes, otherwise prints an error.
- * @stack: pointer to the stack.
+ * @dq: pointer to the deque.
  * @opcode: pointer to the the opcode.
  * @line_number: current line number.
  */
-static void exec_opcode(deque *stack, char *opcode, size_t line_number)
+static void
+exec_opcode(deque * const dq, const char *opcode, const size_t line_number)
 {
 	int i = 0;
-	instruction_t instruction[] = {
-		{"push", push}, {"pint", pint},   {"pall", pall}, {"swap", swap},
-		{"pop", pop},   {"nop", nop},     {"add", add},   {"div", divide},
-		{"sub", sub},   {"rotl", rotl},   {"rotr", rotr}, {"mod", mod},
-		{"mul", mul},   {"pchar", pchar}, {"pstr", pstr}, {NULL, NULL},
+	const instruction_t instruction[] = {
+		{"push", push},   {"pint", pint},   {"pall", pall}, {"swap", swap},
+		{"pop", pop},     {"nop", nop},     {"add", add},   {"div", divide},
+		{"sub", sub},     {"rotl", rotl},   {"rotr", rotr}, {"mod", mod},
+		{"mul", mul},     {"pchar", pchar}, {"pstr", pstr}, {"stack", stack},
+		{"queue", queue}, {NULL, NULL},
 	};
 
 	while (instruction[i].opcode)
 	{
 		if (strcmp(opcode, instruction[i].opcode) == 0)
 		{
-			instruction[i].f(stack, line_number);
+			instruction[i].f(dq, line_number);
 			return;
 		}
 

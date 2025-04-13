@@ -1,8 +1,9 @@
 #ifndef MONTY_DEQUE_H
 #define MONTY_DEQUE_H
 
-#include <stddef.h> /* size_t */
-#include <stdlib.h> /* *alloc */
+#include <inttypes.h> /* intmax_t */
+#include <stddef.h>   /* size_t */
+#include <stdlib.h>   /* *alloc */
 
 #include "linked_list.h"
 
@@ -14,7 +15,7 @@
  */
 struct deque
 {
-	size_t len;
+	intmax_t len;
 	linked_node *first;
 	linked_node *last;
 };

@@ -34,18 +34,24 @@ static unsigned short int read_int(const char *const nstr, int *const number)
 }
 
 /**
- * push - adds a new node at the top of the stack.
- * @stack: address of the stack of the list
- * @line_number: current line number
+ * push - adds a new node at the front of the deque.
+ * @dq: pointer to the deque.
+ * @line_number: current line number.
  */
-void push(deque * const stack, unsigned int line_number)
+void push(deque * const dq, const unsigned int line_number)
 {
 	int n = 0;
+	linked_node *added_node = NULL;
 
-	assert(stack);
+	assert(dq);
 	if (read_int(context.arg, &n) == 0)
 		print_error(PUSH_NO_INTEGER, "push", line_number);
 
-	if (!dq_push_first(stack, n))
+	if (context.stack_mode > 0)
+		added_node = dq_push_first(dq, n);
+	else
+		added_node = dq_push_last(dq, n);
+
+	if (!added_node)
 		print_error(MALLOC_FAIL, "push", line_number);
 }

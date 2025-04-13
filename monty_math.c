@@ -4,27 +4,27 @@
 
 /**
  * monty_math - generic function for executing math operations on the first
- * two numbers in the stack.
- * @stack: pointer to the stack.
+ * two numbers in the deque.
+ * @dq: pointer to the deque.
  * @opcode: original opcode being executed.
  * @math_op: the math operation to carry out.
  * @line_number: the current line number.
  */
 static void
-monty_math(deque *stack, const char *const opcode, const char math_op,
-	unsigned int line_number)
+monty_math(deque * const dq, const char *const opcode, const char math_op,
+	const unsigned int line_number)
 {
-	linked_node *first, *second;
+	const linked_node *first, *second;
 	int result = 0;
 
-	assert(stack);
-	if (stack->len < 2)
+	assert(dq);
+	if (dq->len < 2)
 	{
 		print_error(STACK_TOO_SHORT, opcode, line_number);
 		return;
 	}
 
-	first = stack->first;
+	first = dq->first;
 	second = first->next;
 
 	if ((math_op == '/' || math_op == '%') && first->n == 0)
@@ -44,61 +44,61 @@ monty_math(deque *stack, const char *const opcode, const char math_op,
 	else if (math_op == '%')
 		result = (second->n % first->n);
 
-	dq_pop_first(stack);
-	stack->first->n = result;
+	dq_pop_first(dq);
+	dq->first->n = result;
 }
 
 /**
- * add - add the first two elements of the stack.
- * @stack: pointer to the stack.
+ * add - add the first two elements of the deque.
+ * @dq: pointer to the deque.
  * @line_number: current line number.
  */
-void add(deque *stack, unsigned int line_number)
+void add(deque * const dq, const unsigned int line_number)
 {
-	assert(stack);
-	monty_math(stack, "add", '+', line_number);
+	assert(dq);
+	monty_math(dq, "add", '+', line_number);
 }
 
 /**
- * sub - subtract the first two elements of the stack.
- * @stack: pointer to the stack.
+ * sub - subtract the first two elements of the deque.
+ * @dq: pointer to the deque.
  * @line_number: current line number.
  */
-void sub(deque *stack, unsigned int line_number)
+void sub(deque * const dq, const unsigned int line_number)
 {
-	assert(stack);
-	monty_math(stack, "sub", '-', line_number);
+	assert(dq);
+	monty_math(dq, "sub", '-', line_number);
 }
 
 /**
- * mul - multiplies the first two elements of the stack
- * @stack: pointer to the head of the stack
- * @line_number: current line number
- */
-void mul(deque *stack, unsigned int line_number)
-{
-	assert(stack);
-	monty_math(stack, "mul", '*', line_number);
-}
-
-/**
- * divide - divides the second element by the first element of the stack.
- * @stack: pointer to the stack.
+ * mul - multiply the first two elements of the deque.
+ * @dq: pointer to the deque.
  * @line_number: current line number.
  */
-void divide(deque *stack, unsigned int line_number)
+void mul(deque * const dq, const unsigned int line_number)
 {
-	assert(stack);
-	monty_math(stack, "div", '/', line_number);
+	assert(dq);
+	monty_math(dq, "mul", '*', line_number);
 }
 
 /**
- * mod - get modulo of the second element by first element of the stack.
- * @stack: pointer to the stack.
+ * divide - divide the second element by the first element of the deque.
+ * @dq: pointer to the deque.
  * @line_number: current line number.
  */
-void mod(deque *stack, unsigned int line_number)
+void divide(deque * const dq, const unsigned int line_number)
 {
-	assert(stack);
-	monty_math(stack, "mod", '%', line_number);
+	assert(dq);
+	monty_math(dq, "div", '/', line_number);
+}
+
+/**
+ * mod - get modulo of the second element by first element of the deque.
+ * @dq: pointer to the deque.
+ * @line_number: current line number.
+ */
+void mod(deque * const dq, const unsigned int line_number)
+{
+	assert(dq);
+	monty_math(dq, "mod", '%', line_number);
 }

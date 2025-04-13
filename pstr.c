@@ -5,20 +5,19 @@
 #include <ctype.h>
 
 /**
- * pstr - print the initial ascii characters in the stack
- * followed by a new line.
- * @stack: pointer to the stack.
- * @line_number: current line number
+ * pstr - print the first ascii characters in the deque followed by a new line.
+ * @dq: pointer to the deque.
+ * @line_number: current line number.
  */
-void pstr(deque *stack, unsigned int line_number)
+void pstr(deque * const dq, const unsigned int line_number)
 {
-	linked_node *walk;
+	const linked_node *walk;
 
 	(void)line_number;
-	assert(stack);
-	walk = stack->first;
+	assert(dq);
+	walk = dq->first;
 
-	while (walk)
+	while (walk && walk->n != 0)
 	{
 		if (!isascii(walk->n))
 			break;

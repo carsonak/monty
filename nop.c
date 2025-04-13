@@ -2,11 +2,11 @@
 
 /**
  * nop - doesn’t do anything.
- * @stack: pointer to the stack.
+ * @dq: pointer to the deque.
  * @line_number: current line number.
  */
-void nop(deque *stack, unsigned int line_number)
+void nop(deque * const dq, const unsigned int line_number)
 {
-	(void)stack;
+	(void)dq;
 	(void)line_number;
 }

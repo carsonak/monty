@@ -1,6 +1,6 @@
 #include "monty.h"
 
-#include <errno.h> /* errno */
+#include <errno.h>
 
 /**
  * print_error - print out error messages.
@@ -8,7 +8,9 @@
  * @opcode: operation being carried out when error was encountered.
  * @line_num: current line number.
  */
-void print_error(error_code err, const char *const opcode, size_t line_num)
+void print_error(
+	const error_code err, const char *const opcode,
+	const unsigned int line_num)
 {
 	switch (err)
 	{
