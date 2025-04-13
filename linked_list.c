@@ -1,4 +1,4 @@
-#include "monty_linked_list.h"
+#include "linked_list.h"
 
 /**
  * ln_insert_after - inserts a double link node after another.

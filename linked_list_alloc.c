@@ -1,4 +1,4 @@
-#include "monty_linked_list.h"
+#include "linked_list.h"
 
 /**
  * ln_new - allocates memory for a double link node and initialises it.

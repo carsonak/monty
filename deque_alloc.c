@@ -1,4 +1,4 @@
-#include "monty_deque.h"
+#include "deque.h"
 
 /**
  * dq_new - allocate space for an empty deque.

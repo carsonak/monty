@@ -47,7 +47,6 @@ static void exec_opcode(deque *stack, char *opcode, size_t line_number)
 	}
 
 	print_error(UNKNOWN_OPCODE, opcode, line_number);
-	context.ok = 0;
 }
 
 /**

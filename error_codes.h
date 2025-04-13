@@ -15,7 +15,7 @@
  */
 typedef enum error_code
 {
-	DIVISION_BY_ZERO,
+	DIVISION_BY_ZERO = 1,
 	EMPTY_STACK,
 	INVALID_ARGS,
 	MALLOC_FAIL,

@@ -4,7 +4,7 @@
 #include <stddef.h> /* size_t */
 #include <stdlib.h> /* *alloc */
 
-#include "monty_linked_list.h"
+#include "linked_list.h"
 
 /**
  * struct deque - a deque data structure.
