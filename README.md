@@ -58,3 +58,5 @@ and exit.
 | **pstr** | Print the string formed by the characters in the stack followed by a new line. The opcode will stop printing characters when; it encounters a non-ascii character or a NUL (`\0`) character or it reaches the bottom of the stack. |
 | **rotl** | Move the top element of the stack to the bottom. |
 | **rotr** | Move the bottom element of the stack to the top. |
+| **stack** | Change the data format into a stack (default). |
+| **queue** | Change the data format into a queue. The top of the stack becomes the first element of the queue while the bottom of the stack becomes the last element of the queue. |
